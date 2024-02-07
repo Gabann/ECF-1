@@ -1,37 +1,19 @@
 <script setup>
+import {ref} from "vue";
+import {useApiStore} from "@/stores/apiStore";
+
 let username, password, email;
+let apiResponse = ref('');
 
-function submitForm(username, email, password) {
-	const url = `http://localhost:3000/signup?username=${username}&email=${email}&password=${password}`;
-	// const data = {
-	// 	username: username,
-	// 	email: email,
-	// 	password: password
-	// };
-
-	// console.log(url);
-	// console.log(JSON.stringify(data));
-
-	fetch(url, {
-		method: 'POST',
-		mode: 'no-cors',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	})
-		// .then(response => response.json())
-		.then(data => console.log(data))
-		.catch((error) => {
-			console.error('Error:', error);
-		});
+async function submitForm(username, email, password) {
+	apiResponse.value = await useApiStore().post(`signup`, {username: username, email: email, password: password});
 }
-
-
 </script>
 
 <template>
 	<div class="signup">
 		<h1>Signup</h1>
+		<h3 v-if="apiResponse">{{ apiResponse }}</h3>
 		<form @submit.prevent="submitForm(username, email, password)">
 			<label for="username">Username:</label>
 			<input id="username" v-model="username" required type="text">
