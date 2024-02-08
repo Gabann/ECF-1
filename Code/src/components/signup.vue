@@ -69,5 +69,11 @@ let validEmail = computed(() => {
 
 
 <style scoped>
+.valid {
+	background-color: green;
+}
 
+.invalid {
+	background-color: red;
+}
 </style>

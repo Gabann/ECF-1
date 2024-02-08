@@ -3,7 +3,6 @@ import NotFound404 from "@/components/notFound404.vue";
 import Main from "@/views/main.vue";
 import login from "@/components/login.vue";
 import Signup from "@/components/signup.vue";
-import Test from "@/components/test.vue";
 import AddTask from "@/components/addTask.vue";
 import AddProject from "@/components/addProject.vue";
 import Cookies from 'js-cookie';
@@ -15,7 +14,6 @@ const routes = [
 	{path: '/', component: Main},
 	{path: '/login', component: login},
 	{path: '/signUp', component: Signup},
-	{path: '/test', component: Test},
 	{path: '/addTask', component: AddTask, meta: {requiresAuth: true}},
 	{path: '/addProject', component: AddProject, meta: {requiresAuth: true}}
 ];

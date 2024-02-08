@@ -1,5 +1,5 @@
 const {sequelize} = require("../config/databaseConnection");
-const {sendResponse} = require("../globals");
+const {sendResponse} = require("../../globals");
 const Task = require('../model/taskModel')(sequelize);
 
 const taskController = {

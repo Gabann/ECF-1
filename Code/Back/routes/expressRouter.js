@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const userController = require('../controller/userController');
 const taskController = require('../controller/taskController');
 const projectController = require('../controller/projectController');
-const {sendResponse} = require("../globals");
+const {sendResponse} = require("../../globals");
 
 function isTokenValid(req, res) {
 	const token = req.headers.authorization.split(" ")[1];

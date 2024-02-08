@@ -1,5 +1,5 @@
 const {sequelize} = require("../config/databaseConnection");
-const {sendResponse} = require("../globals");
+const {sendResponse} = require("../../globals");
 const Project = require('../model/projectModel')(sequelize);
 
 const projectController = {

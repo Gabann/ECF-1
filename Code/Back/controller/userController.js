@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const {sequelize} = require("../config/databaseConnection");
 const User = require('../model/userModel')(sequelize);
-const {sendResponse} = require("../globals");
+const {sendResponse} = require("../../globals");
 
 const userController = {
 
