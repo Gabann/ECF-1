@@ -19,7 +19,6 @@ import {RouterView} from 'vue-router';
 
 	</div>
 
-
 	<footer-component class="footer"></footer-component>
 </template>
 

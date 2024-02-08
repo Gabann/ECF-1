@@ -23,6 +23,7 @@ const userController = {
 	},
 
 	logIn: async (req, res) => {
+		console.log(req.body);
 		try {
 			let username = req.body.username;
 			let password = req.body.password;
@@ -38,10 +39,10 @@ const userController = {
 			}
 
 			const token = jwt.sign({userId: user.id}, "RANDOM_TOKEN_SECRET", {
-				expiresIn: "1m",
+				expiresIn: "30d",
 			});
 
-			sendResponse(res, 200, {token: token});
+			sendResponse(res, 200, "Successfully logged in, redirecting...", {token: token});
 		} catch (error) {
 			sendResponse(res, 500, error.message);
 		}

@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 
-const baseUrl = 'http://localhost:3000/';
+const baseUrl = 'http://localhost:3000/api/';
 
 export const useApiStore = defineStore('apiStore', () => {
 	async function post(url, data) {
@@ -16,14 +16,16 @@ export const useApiStore = defineStore('apiStore', () => {
 				},
 				body: JSON.stringify(data),
 			});
-			const responseData = await response.json(); // Renamed 'data' to 'responseData'
-			apiResponse = responseData.response;
+			apiResponse = await response.json();
 		} catch (error) {
 			console.error('Error:', error);
 		}
-
 		return apiResponse;
 	}
 
-	return {post};
+	async function checkLoggedIn(url, data) {
+		return await post(url, data) === true;
+	}
+
+	return {post, checkLoggedIn};
 });

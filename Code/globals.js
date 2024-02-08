@@ -1,3 +1,4 @@
-module.exports.sendResponse = function (res, statusCode, responseMessage) {
-	res.status(statusCode).json({response: responseMessage});
+module.exports.sendResponse = function (res, statusCode, responseMessage, optionalResponse = {}) {
+	console.log(responseMessage, optionalResponse);
+	res.status(statusCode).json({message: responseMessage, ...optionalResponse});
 };

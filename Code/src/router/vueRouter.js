@@ -6,7 +6,8 @@ import Signup from "@/components/signup.vue";
 import Test from "@/components/test.vue";
 import AddTask from "@/components/addTask.vue";
 import AddProject from "@/components/addProject.vue";
-
+import Cookies from 'js-cookie';
+import {useApiStore} from "@/stores/apiStore";
 
 const routes = [
 	{path: '/:pathMatch(.*)*', redirect: 'not-found'},
@@ -15,11 +16,11 @@ const routes = [
 	{path: '/login', component: login},
 	{path: '/signUp', component: Signup},
 	{path: '/test', component: Test},
-	{path: '/addTask', component: AddTask},
-	{path: '/addProject', component: AddProject}
+	{path: '/addTask', component: AddTask, meta: {requiresAuth: true}},
+	{path: '/addProject', component: AddProject, meta: {requiresAuth: true}}
 ];
 
-const router = createRouter({
+const vueRouter = createRouter({
 	history: createWebHistory(),
 	routes,
 	scrollBehavior(to, from) {
@@ -30,21 +31,19 @@ const router = createRouter({
 	},
 });
 
+vueRouter.beforeEach(async (to, from, next) => {
+	if (to.matched.some(record => record.meta.requiresAuth)) {
+		let token = Cookies.get('token');
+		if (!token || !(await useApiStore().checkLoggedIn('verifyToken', {token}))) {
+			next({
+				path: '/login',
+			});
+		} else {
+			next();
+		}
+	} else {
+		next();
+	}
+});
 
-// router.beforeEach((to, from, next) => {
-// 	if (to.matched.some(record => record.meta.requiresAuth)) {
-// 		const token = Cookies.get('token');
-// 		if (!token) {
-// 			next({
-// 				path: '/login',
-// 				query: {redirect: to.fullPath},
-// 			});
-// 		} else if () {
-// 			next();
-// 		}
-// 	} else {
-// 		next();
-// 	}
-// });
-
-export default router;
+export default vueRouter;
