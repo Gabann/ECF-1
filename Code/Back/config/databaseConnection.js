@@ -11,7 +11,7 @@ let sequelize = new Sequelize(
 	}
 );
 
-sequelize.sync({force: true})
+sequelize.sync({force: false})
 	.then(() => console.log("La base de données à bien été synchronisée"))
 	.catch((error) =>
 		console.error("Problème lors de la synchronisation :", error.message)

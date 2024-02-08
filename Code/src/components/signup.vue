@@ -47,7 +47,7 @@ let validEmail = computed(() => {
 <template>
 	<div class="signup">
 		<h1>Signup</h1>
-		<h3 v-if="apiResponse">{{ apiResponse }}</h3>
+		<h3 v-if="apiResponse">{{ apiResponse.message }}</h3>
 		<form @submit.prevent="submitForm(username, email, password)">
 			<label :class="validUsername" for="username">Username:</label>
 			<input id="username" v-model="username" required type="text">
