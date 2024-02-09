@@ -6,7 +6,9 @@ This webapp is a project management application, users can create and manage pro
 
 ## Tech stack
 
-Vuejs 3, Pinia, Express, Sequelize, Bootstrap
+- Frontend: Vuejs 3, Pinia, Bootstrap
+
+- Backend: Express, Sequelize, MySQL
 
 -------------
 
@@ -40,14 +42,6 @@ You can now access the webapp at http://localhost:5173/ and the api is running a
 ## Usage
 
 App is meant to be used on a web browser, you must create an account to create and manage projects
-
----------------
-
-### TODO
-
-- Next steps
-- Features planned
-- Known bugs (shortlist)
 
 ---------------
 

@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import {useApiStore} from "@/stores/apiStore";
 import Cookies from "js-cookie";
+import router from '../router/vueRouter';
 
 let projectName, projectDescription;
 let apiResponse = ref('');
@@ -12,13 +13,14 @@ async function submitForm(projectName, projectDescription) {
 		projectDescription: projectDescription,
 		token: Cookies.get('token')
 	});
+	router.go();
 }
 </script>
 
 <template>
 	<div class="add-task">
-		<h1>Add project</h1>
-		<h3 v-if="apiResponse">{{ apiResponse }}</h3>
+		<h3>Add project</h3>
+		<h3 v-if="apiResponse">{{ apiResponse.message }}</h3>
 		<form @submit.prevent="submitForm(projectName, projectDescription)">
 			<label for="username">Project name:</label>
 			<input id="username" v-model="projectName" required type="text">

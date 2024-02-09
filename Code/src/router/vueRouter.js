@@ -1,21 +1,21 @@
 import {createRouter, createWebHistory} from 'vue-router';
-import NotFound404 from "@/components/notFound404.vue";
-import Main from "@/views/main.vue";
-import login from "@/components/login.vue";
-import Signup from "@/components/signup.vue";
+import NotFound404 from "@/views/notFound404.vue";
+import Login from "@/views/login.vue";
+import Signup from "@/views/signup.vue";
 import AddTask from "@/components/addTask.vue";
-import AddProject from "@/components/addProject.vue";
-import Cookies from 'js-cookie';
+import ManageProjects from "@/views/manageProjects.vue";
+import ManageTasks from "@/views/manageTasks.vue";
 import {useApiStore} from "@/stores/apiStore";
 
 const routes = [
 	{path: '/:pathMatch(.*)*', redirect: 'not-found'},
 	{path: '/not-found', component: NotFound404},
-	{path: '/', component: Main},
-	{path: '/login', component: login},
+	{path: '/', redirect: 'login'},
+	{path: '/login', component: Login},
 	{path: '/signUp', component: Signup},
 	{path: '/addTask', component: AddTask, meta: {requiresAuth: true}},
-	{path: '/addProject', component: AddProject, meta: {requiresAuth: true}}
+	{path: '/manageProjects', component: ManageProjects, meta: {requiresAuth: true}},
+	{path: '/manageTasks', component: ManageTasks, meta: {requiresAuth: true}}
 ];
 
 const vueRouter = createRouter({
@@ -30,15 +30,18 @@ const vueRouter = createRouter({
 });
 
 vueRouter.beforeEach(async (to, from, next) => {
+	const userIsLoggedIn = await useApiStore().checkIsLoggedIn();
+
 	if (to.matched.some(record => record.meta.requiresAuth)) {
-		let token = Cookies.get('token');
-		if (!token || !(await useApiStore().checkLoggedIn('verifyToken', {token}))) {
+		if (!userIsLoggedIn) {
 			next({
 				path: '/login',
 			});
 		} else {
 			next();
 		}
+	} else if ((to.path === '/login' || to.path === '/signup') && userIsLoggedIn) {
+		next('/manageProjects'); // redirect to '/manageProjects' if user is already logged in
 	} else {
 		next();
 	}

@@ -11,7 +11,7 @@ import {RouterView} from 'vue-router';
 
 		<main>
 
-			<div class="col-10 mx-auto">
+			<div class="col-10 mx-auto" style="padding: 1em">
 				<RouterView/>
 			</div>
 
@@ -24,8 +24,8 @@ import {RouterView} from 'vue-router';
 
 <style>
 :root {
-	--header-height: 7vh;
-	--footer-height: 7vh;
+	--header-height: 5vh;
+	--footer-height: 5vh;
 }
 
 .header {

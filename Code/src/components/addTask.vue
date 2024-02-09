@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import {useApiStore} from "@/stores/apiStore";
 import Cookies from "js-cookie";
+import router from "@/router/vueRouter";
 
 let taskName, taskDescription, taskPriority;
 let apiResponse = ref('');
@@ -13,13 +14,14 @@ async function submitForm(taskName, taskDescription, taskPriority) {
 		taskPriority: taskPriority,
 		token: Cookies.get('token')
 	});
+	router.go();
 }
 </script>
 
 <template>
 	<div class="add-task">
 		<h1>Add task</h1>
-		<h3 v-if="apiResponse">{{ apiResponse }}</h3>
+		<h3 v-if="apiResponse">{{ apiResponse.message }}</h3>
 		<form @submit.prevent="submitForm(taskName, taskDescription, taskPriority)">
 			<label for="username">Task name:</label>
 			<input id="username" v-model="taskName" required type="text">

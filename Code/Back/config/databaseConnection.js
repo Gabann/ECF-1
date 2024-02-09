@@ -1,38 +1,44 @@
-const {Sequelize} = require("sequelize");
+const {Sequelize} = require('sequelize');
 require('dotenv').config();
 
 let sequelize = new Sequelize(
-	process.env.DB_DATABASE,
+	'',
 	process.env.DB_USER,
 	process.env.DB_PASSWORD,
 	{
 		host: process.env.DB_HOST,
-		dialect: "mysql"
+		dialect: 'mysql',
 	}
 );
 
-sequelize.sync({force: false})
-	.then(() => console.log("La base de données à bien été synchronisée"))
-	.catch((error) =>
-		console.error("Problème lors de la synchronisation :", error.message)
-	);
+sequelize
+	.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME};`)
+	.then(() => {
+		console.log('Database check complete.');
+	})
+	.catch((error) => {
+		console.error('Error checking database:', error.message);
+	});
 
-const Project = require('../model/projectModel')(sequelize);
-const Task = require('../model/taskModel')(sequelize);
-const User = require('../model/userModel')(sequelize);
+sequelize = new Sequelize(
+	process.env.DB_NAME,
+	process.env.DB_USER,
+	process.env.DB_PASSWORD,
+	{
+		host: process.env.DB_HOST,
+		dialect: 'mysql',
+	}
+);
 
-
-User.belongsToMany(Project, {through: 'User assigned to project'});
-Project.belongsToMany(User, {through: 'User assigned to project'});
-
-// Project.belongsToMany(Task, {through: 'Test'});
-// Task.belongsToMany(Project, {through: 'Test'});
-
-Project.hasMany(Task, {
-	foreignKey: 'taskId'
-});
-Task.belongsTo(Project);
+sequelize
+	.sync({force: false})
+	.then(() => {
+		console.log('Database successfully synchronized.');
+	})
+	.catch((error) => {
+		console.error('Error connecting to database:', error.message);
+	});
 
 module.exports = {
-	sequelize
+	sequelize,
 };

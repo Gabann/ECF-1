@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const {sequelize} = require("../config/databaseConnection");
-const User = require('../model/userModel')(sequelize);
+const dataBaseModel = require('../model/databaseModel')(sequelize);
 const {sendResponse} = require("../../globals");
 
 const userController = {
@@ -13,7 +13,7 @@ const userController = {
 			let email = req.body.email;
 
 			let hashedPassword = await bcrypt.hash(password, 10);
-			await User.create({username: username, email: email, password: hashedPassword});
+			await dataBaseModel.User.create({username: username, email: email, password: hashedPassword});
 
 			sendResponse(res, 201, "User added successfully, redirecting...");
 		} catch (error) {
@@ -23,12 +23,11 @@ const userController = {
 	},
 
 	logIn: async (req, res) => {
-		console.log(req.body);
 		try {
 			let username = req.body.username;
 			let password = req.body.password;
 
-			const user = await User.findOne({where: {username: username}});
+			const user = await dataBaseModel.User.findOne({where: {username: username}});
 			if (!user) {
 				return sendResponse(res, 401, "Username or password incorrect");
 			}
@@ -38,7 +37,7 @@ const userController = {
 				return sendResponse(res, 401, "Username or password incorrect");
 			}
 
-			const token = jwt.sign({userId: user.id}, "RANDOM_TOKEN_SECRET", {
+			const token = jwt.sign({userId: user.id}, "TOKEN_SECRET", {
 				expiresIn: "30d",
 			});
 

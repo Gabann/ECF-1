@@ -5,8 +5,8 @@
 This API is used to manage accounts and projects CRUD
 
 Base URL
-The base URL for all API requests is:
 
+The base URL for all API requests is:
 http://localhost:3000/api/
 
 ------------
@@ -74,6 +74,18 @@ Body
 
 - Message: Returns message and code status based on the success of the request
 
+### GET /getProjects
+
+#### Response
+
+- Message: Returns the list of projects where the user is a member of
+
+### GET /getTasks
+
+#### Response
+
+- Message: Returns the list of tasks where the user is a member of
+
 ----------------------------------------------------
 
 ## Example
@@ -105,6 +117,7 @@ This API uses the following error codes:
 
 - 200 OK
 - 201 Created
+- 400 Bad Request
 - 401 Unauthorized
 - 404 Not Found
 - 500 Internal Server Error
