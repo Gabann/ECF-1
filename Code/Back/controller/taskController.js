@@ -23,7 +23,6 @@ const taskController = {
 	getTasks: async (req, res) => {
 		try {
 			let token = jwt.verify(req.headers.authorization.split(" ")[1], "TOKEN_SECRET");
-			let userId = token.userId;
 
 			const tasks = await databaseModel.Task.findAll();
 

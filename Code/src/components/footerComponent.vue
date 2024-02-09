@@ -6,7 +6,7 @@ const currentYear = new Date().getFullYear();
 	<footer class="d-flex align-items-center bg-primary">
 		<div class="col-4 h-100 d-flex align-items-center">
 			<a class="image-container" href="https://github.com/Gabann">
-				<img src="https://avatars.githubusercontent.com/u/40118785?v=4">
+				<img alt="logo" src="https://avatars.githubusercontent.com/u/40118785?v=4">
 			</a>
 		</div>
 

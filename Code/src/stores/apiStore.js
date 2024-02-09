@@ -46,7 +46,6 @@ export const useApiStore = defineStore('apiStore', () => {
 	async function checkIsLoggedIn() {
 		let response = await post('verifyToken');
 		return response.message === true;
-		z;
 	}
 
 	function logOut() {
